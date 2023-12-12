@@ -1,40 +1,11 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from numpy.random import rand
+from pathlib import PosixPath
 
-from matplotlib.image import AxesImage
-from matplotlib.lines import Line2D
-from matplotlib.patches import Rectangle
-from matplotlib.text import Text
+# Your PosixPath object
+path_object = PosixPath('/mnt/data0/sEEG_DATA/MCW-FH_006/EMU/EMU-015_subj-MCW-FH_006_task-gaps/EMU-015_subj-MCW-FH_006_task-gaps_run-35_RIP.nev')
 
-# Fixing random state for reproducibility
-np.random.seed(19680801)
-fig, (ax1, ax2) = plt.subplots(2, 1)
-ax1.set_title('click on points, rectangles or text', picker=True)
-ax1.set_ylabel('ylabel', picker=True, bbox=dict(facecolor='red'))
-line, = ax1.plot(rand(100), 'o', picker=True, pickradius=5)
+# Use PosixPath object as a string
+path_string = str(path_object)
 
-# Pick the rectangle.
-ax2.bar(range(10), rand(10), picker=True)
-for label in ax2.get_xticklabels():  # Make the xtick labels pickable.
-    label.set_picker(True)
-
-
-def onpick1(event):
-    if isinstance(event.artist, Line2D):
-        thisline = event.artist
-        xdata = thisline.get_xdata()
-        ydata = thisline.get_ydata()
-        ind = event.ind
-        label=thisline.get_label()
-        print('onpick1 line:', str(label))
-    elif isinstance(event.artist, Rectangle):
-        patch = event.artist
-        print('onpick1 patch:', patch.get_path())
-    elif isinstance(event.artist, Text):
-        text = event.artist
-        print('onpick1 text:', text.get_text())
-
-
-fig.canvas.mpl_connect('pick_event', onpick1)
-plt.show()
+# Alternatively, you can directly use the object in contexts that expect a string
+# For example, you can print it directly
+print(path_object)
